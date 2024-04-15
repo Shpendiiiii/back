@@ -113,7 +113,7 @@ async def insert_bonds(data: BondData, database: asyncpg.Connection = Depends(ge
               VALUES ($1, $2, $3, $4, $5)
               RETURNING holding_id
           '''
-    record = await database.fetchrow(query, data.name, data.user_id, data.face_value, data.purchasePrice, date_object)
+    record = await database.fetchrow(query, data.name, data.user_id, data.amount, data.purchasePrice, date_object)
     if record:
         return {"message": "Bond data saved", "bond_id": record['holding_id']}
     else:
