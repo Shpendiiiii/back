@@ -82,6 +82,14 @@ async def say_hello(id: str, database: asyncpg.Connection = Depends(get_database
     result = await database.fetch(query, id)
     return result
 
+@app.get("/bonds/{id}")
+async def get_bonds(id: str, database: asyncpg.Connection = Depends(get_database_connection)):
+    id = int(id)
+    query = "SELECT * from holdings_bonds WHERE user_id = $1"
+    result = await database.fetch(query, id)
+    return result
+
+
 
 @app.get("/user/exist/{username}")
 async def check_user_exists(database: asyncpg.Connection = Depends(get_database_connection),
